@@ -4,6 +4,7 @@ from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_MIN_RADIUS, ASTEROID
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 def main():
     pygame.init()
@@ -17,9 +18,11 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (shots, updatable, drawable)
     player_1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     outfield = AsteroidField()
     
@@ -34,6 +37,10 @@ def main():
             if spacerock.collision_check(player_1):
                 print("Game over!")
                 sys.exit()
+            for bullet in shots:
+                if spacerock.collision_check(bullet):
+                    spacerock.kill()
+                    bullet.kill()    
         for drawing in drawable:
             drawing.draw(screen)
         pygame.display.flip()
