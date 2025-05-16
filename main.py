@@ -39,7 +39,7 @@ def main():
                 sys.exit()
             for bullet in shots:
                 if spacerock.collision_check(bullet):
-                    spacerock.kill()
+                    spacerock.split()
                     bullet.kill()    
         for drawing in drawable:
             drawing.draw(screen)
